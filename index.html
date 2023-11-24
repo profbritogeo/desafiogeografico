@@ -133,13 +133,15 @@
     { "País": "Turquia", "População": 85000000, "PIB": 720098000, "IDH": 0.820, "Território": 783356, "Continente": "Ásia" },
     { "País": "Arábia Saudita", "População": 35000000, "PIB": 700118000, "IDH": 0.853, "Território": 2149690, "Continente": "Ásia" },
     { "País": "Taiwan", "População": 23000000, "PIB": 669324000, "IDH": 0.911, "Território": 36193, "Continente": "Ásia" },
-];
+    ];
 
     let paisAtual;
 
     function escolherInformacao(informacao) {
-        const indiceAleatorio = Math.floor(Math.random() * paises.length);
-        paisAtual = paises[indiceAleatorio];
+        if (!paisAtual) {
+            const indiceAleatorio = Math.floor(Math.random() * paises.length);
+            paisAtual = paises[indiceAleatorio];
+        }
 
         document.getElementById("informacao").innerHTML = `<strong>${informacao}:</strong> ${paisAtual[informacao]}`;
     }
@@ -154,7 +156,13 @@
             alert(`Oops! You missed it. The correct country was: ${respostaCorreta}`);
         }
     }
+
+    // Chama a função para escolher uma informação assim que a página carrega
+    window.onload = function() {
+        escolherInformacao('População');
+    };
 </script>
 
 </body>
 </html>
+
