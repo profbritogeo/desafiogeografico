@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Geography Challenge</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        p {
+            color: #555;
+            text-align: center;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+
+        input {
+            padding: 8px;
+            margin: 5px;
+            font-size: 16px;
+        }
+
+        #informacao {
+            font-size: 18px;
+            margin-top: 10px;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Geography Challenge</h1>
+<p>Choose an information to reveal:</p>
+
+<button onclick="escolherInformacao('População')">Population</button>
+<button onclick="escolherInformacao('PIB')">GDP</button>
+<button onclick="escolherInformacao('IDH')">HDI</button>
+<button onclick="escolherInformacao('Território')">Territory</button>
+<button onclick="escolherInformacao('Continente')">Continent</button>
+
+<p id="informacao"></p>
+
+<label for="palpite">Enter the country's name:</label>
+<input type="text" id="palpite" placeholder="Type your guess...">
+<button onclick="verificarPalpite()">Check Guess</button>
+
+<script>
+    const paises = [
+        { "País": "Estados Unidos", "População": 331000000, "PIB": 20893746000, "IDH": 0.926, "Território": 9631418, "Continente": "América do Norte" },
+        { "País": "China", "População": 1409000000, "PIB": 14722801000, "IDH": 0.758, "Território": 9596960, "Continente": "Ásia" },
+        { "País": "Japão", "População": 126000000, "PIB": 5057759000, "IDH": 0.919, "Território": 377975, "Continente": "Ásia" },
+        { "País": "Alemanha", "População": 83000000, "PIB": 3846414000, "IDH": 0.947, "Território": 357022, "Continente": "Europa" },
+        { "País": "Reino Unido", "População": 68000000, "PIB": 2764198000, "IDH": 0.932, "Território": 243610, "Continente": "Europa" },
+        { "País": "Índia", "População": 1360000000, "PIB": 2664749000, "IDH": 0.645, "Território": 3287260, "Continente": "Ásia" },
+        { "País": "França", "População": 67000000, "PIB": 2630318000, "IDH": 0.901, "Território": 551695, "Continente": "Europa" },
+        { "País": "Itália", "População": 60000000, "PIB": 1888709000, "IDH": 0.883, "Território": 301340, "Continente": "Europa" },
+        { "País": "Canadá", "População": 38000000, "PIB": 1644037000, "IDH": 0.933, "Território": 9984670, "Continente": "América do Norte" },
+        { "País": "Coreia do Sul", "População": 51000000, "PIB": 1637896000, "IDH": 0.916, "Território": 100363, "Continente": "Ásia" },
+        { "País": "Rússia", "População": 145000000, "PIB": 1483498000, "IDH": 0.824, "Território": 17098242, "Continente": "Europa/Ásia" },
+        { "País": "Brasil", "População": 214000000, "PIB": 1444733000, "IDH": 0.758, "Território": 8515767, "Continente": "América do Sul" },
+    { "País": "Eslováquia", "População": 5000000, "PIB": 105173000, "IDH": 0.845, "Território": 49035, "Continente": "Europa" },
+    { "País": "Porto Rico", "População": 3000000, "PIB": 103138000, "IDH": 0.845, "Território": 9104, "Continente": "América do Norte" },
+    { "País": "Quênia", "População": 54000000, "PIB": 101014000, "IDH": 0.601, "Território": 580367, "Continente": "África" },
+    { "País": "Grécia", "População": 10000000, "PIB": 188835000, "IDH": 0.888, "Território": 131957, "Continente": "Europa" },
+    { "País": "Cazaquistão", "População": 19000000, "PIB": 171082000, "IDH": 0.826, "Território": 2724900, "Continente": "Ásia" },
+    { "País": "Iraque", "População": 42000000, "PIB": 166757000, "IDH": 0.685, "Território": 438317, "Continente": "Ásia" },
+    { "País": "Ucrânia", "População": 41000000, "PIB": 155582000, "IDH": 0.751, "Território": 603550, "Continente": "Europa" },
+    { "País": "Hungria", "População": 9000000, "PIB": 155808000, "IDH": 0.854, "Território": 93028, "Continente": "Europa" },
+    { "País": "Argélia", "População": 44000000, "PIB": 147689000, "IDH": 0.748, "Território": 2381741, "Continente": "África" },
+    { "País": "Catar", "População": 3000000, "PIB": 146401000, "IDH": 0.848, "Território": 11586, "Continente": "Ásia" },
+    { "País": "Marrocos", "População": 37000000, "PIB": 114724000, "IDH": 0.686, "Território": 446550, "Continente": "África" },
+    { "País": "Cuba", "População": 11000000, "PIB": 107352000, "IDH": 0.783, "Território": 109884, "Continente": "América do Norte" },
+    { "País": "Venezuela", "População": 28000000, "PIB": 106359000, "IDH": 0.711, "Território": 916445, "Continente": "América do Sul" },
+    { "País": "Kuwait", "População": 4000000, "PIB": 105949000, "IDH": 0.803, "Território": 17818, "Continente": "Ásia" },
+    { "País": "Vietnã", "População": 98000000, "PIB": 271158000, "IDH": 0.704, "Território": 331212, "Continente": "Ásia" },
+    { "País": "Colômbia", "População": 51000000, "PIB": 271347000, "IDH": 0.767, "Território": 1141748, "Continente": "América do Sul" },
+    { "País": "Finlândia", "População": 6000000, "PIB": 269751000, "IDH": 0.938, "Território": 338424, "Continente": "Europa" },
+    { "País": "Paquistão", "População": 227000000, "PIB": 257829000, "IDH": 0.557, "Território": 881913, "Continente": "Ásia" },
+    { "País": "Chile", "População": 19000000, "PIB": 252940000, "IDH": 0.851, "Território": 756102, "Continente": "América do Sul" },
+    { "País": "Romênia", "População": 19000000, "PIB": 248716000, "IDH": 0.828, "Território": 238397, "Continente": "Europa" },
+    { "País": "República Tcheca", "População": 10000000, "PIB": 245349000, "IDH": 0.900, "Território": 78865, "Continente": "Europa" },
+    { "País": "Portugal", "População": 10000000, "PIB": 228539000, "IDH": 0.863, "Território": 92090, "Continente": "Europa" },
+    { "País": "Nova Zelândia", "População": 5000000, "PIB": 212044000, "IDH": 0.944, "Território": 268021, "Continente": "Oceania" },
+    { "País": "Peru", "População": 33000000, "PIB": 203196000, "IDH": 0.777, "Território": 1285216, "Continente": "América do Sul" },
+    { "País": "Egito", "População": 104000000, "PIB": 369309000, "IDH": 0.707, "Território": 1001450, "Continente": "África" },
+    { "País": "Noruega", "População": 5000000, "PIB": 362522000, "IDH": 0.957, "Território": 323802, "Continente": "Europa" },
+    { "País": "Filipinas", "População": 113000000, "PIB": 361489000, "IDH": 0.712, "Território": 300000, "Continente": "Ásia" },
+    { "País": "Emirados Árabes Unidos", "População": 10000000, "PIB": 358869000, "IDH": 0.882, "Território": 83600, "Continente": "Ásia" },
+    { "País": "Dinamarca", "População": 6000000, "PIB": 356085000, "IDH": 0.938, "Território": 42933, "Continente": "Europa/Ásia" },
+    { "País": "Hong Kong", "População": 7000000, "PIB": 349445000, "IDH": 0.949, "Território": 1104, "Continente": "Ásia" },
+    { "País": "Singapura", "População": 6000000, "PIB": 339988000, "IDH": 0.938, "Território": 719, "Continente": "Ásia" },
+    { "País": "Malásia", "População": 32000000, "PIB": 336664000, "IDH": 0.809, "Território": 329847, "Continente": "Ásia" },
+    { "País": "Bangladesh", "População": 166000000, "PIB": 329484000, "IDH": 0.632, "Território": 147570, "Continente": "Ásia" },
+    { "País": "África do Sul", "População": 60000000, "PIB": 302141000, "IDH": 0.710, "Território": 1219090, "Continente": "África" },
+    { "País": "Polônia", "População": 38000000, "PIB": 596618000, "IDH": 0.868, "Território": 312696, "Continente": "Europa" },
+    { "País": "Suécia", "População": 10000000, "PIB": 541064000, "IDH": 0.945, "Território": 450295, "Continente": "Europa" },
+    { "País": "Bélgica", "População": 11000000, "PIB": 521861000, "IDH": 0.931, "Território": 30528, "Continente": "Europa" },
+    { "País": "Tailândia", "População": 70000000, "PIB": 501795000, "IDH": 0.755, "Território": 513120, "Continente": "Ásia" },
+    { "País": "Áustria", "População": 9000000, "PIB": 433258000, "IDH": 0.922, "Território": 83879, "Continente": "Europa" },
+    { "País": "Nigéria", "População": 211000000, "PIB": 429899000, "IDH": 0.533, "Território": 923768, "Continente": "África" },
+    { "País": "Irlanda", "População": 5000000, "PIB": 425889000, "IDH": 0.955, "Território": 70273, "Continente": "Europa" },
+    { "País": "Israel", "População": 9000000, "PIB": 407101000, "IDH": 0.919, "Território": 22145, "Continente": "Ásia" },
+    { "País": "Argentina", "População": 45000000, "PIB": 383067000, "IDH": 0.845, "Território": 2780400, "Continente": "América do Sul" },
+    { "País": "Austrália", "População": 26000000, "PIB": 1423473000, "IDH": 0.944, "Território": 7692024, "Continente": "Oceania" },
+    { "País": "Espanha", "População": 47000000, "PIB": 1281485000, "IDH": 0.891, "Território": 505992, "Continente": "Europa" },
+    { "País": "México", "População": 126000000, "PIB": 1073439000, "IDH": 0.779, "Território": 1964375, "Continente": "América do Norte" },
+    { "País": "Indonésia", "População": 276000000, "PIB": 1058424000, "IDH": 0.718, "Território": 1904569, "Continente": "Ásia" },
+    { "País": "Irã", "População": 84000000, "PIB": 939316000, "IDH": 0.783, "Território": 1648195, "Continente": "Ásia" },
+    { "País": "Países Baixos", "População": 17000000, "PIB": 913865000, "IDH": 0.944, "Território": 41543, "Continente": "Europa" },
+    { "País": "Suíça", "População": 8000000, "PIB": 752248000, "IDH": 0.955, "Território": 41290, "Continente": "Europa" },
+    { "País": "Turquia", "População": 85000000, "PIB": 720098000, "IDH": 0.820, "Território": 783356, "Continente": "Ásia" },
+    { "País": "Arábia Saudita", "População": 35000000, "PIB": 700118000, "IDH": 0.853, "Território": 2149690, "Continente": "Ásia" },
+    { "País": "Taiwan", "População": 23000000, "PIB": 669324000, "IDH": 0.911, "Território": 36193, "Continente": "Ásia" },
+];
+
+    let paisAtual;
+
+    function escolherInformacao(informacao) {
+        const indiceAleatorio = Math.floor(Math.random() * paises.length);
+        paisAtual = paises[indiceAleatorio];
+
+        document.getElementById("informacao").innerHTML = `<strong>${informacao}:</strong> ${paisAtual[informacao]}`;
+    }
+
+    function verificarPalpite() {
+        const palpiteUsuario = document.getElementById("palpite").value;
+        const respostaCorreta = paisAtual["País"];
+
+        if (palpiteUsuario.toLowerCase() === respostaCorreta.toLowerCase()) {
+            alert("Congratulations! You got it right!");
+        } else {
+            alert(`Oops! You missed it. The correct country was: ${respostaCorreta}`);
+        }
+    }
+</script>
+
+</body>
+</html>
