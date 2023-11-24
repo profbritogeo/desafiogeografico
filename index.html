@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Desafio Geográfico (Desenvolvido por Álisson Brito de Siqueira)
+    <title>Desafio Geográfico
     </title>
     <style>
         body {
@@ -53,7 +53,8 @@
 <body>
 
 <h1>Geography Challenge</h1>
-<p>Choose an information to reveal:</p>
+<p>Desenvolvido por Álisson Brito de Siqueira</p>
+<p>Escolha qualquer informação para ser revelada:</p>
 
 <button onclick="escolherInformacao('População')">Populção</button>
 <button onclick="escolherInformacao('PIB')">PIB</button>
@@ -63,9 +64,9 @@
 
 <p id="informacao"></p>
 
-<label for="palpite">Enter the country's name:</label>
+<label for="palpite">Escreva o nome do país:</label>
 <input type="text" id="palpite" placeholder="Type your guess...">
-<button onclick="verificarPalpite()">Check Guess</button>
+<button onclick="verificarPalpite()">Checar resposta</button>
 
 <script>
     const paises = [
@@ -152,9 +153,9 @@
         const respostaCorreta = paisAtual["País"];
 
         if (palpiteUsuario.toLowerCase() === respostaCorreta.toLowerCase()) {
-            alert("Congratulations! You got it right!");
+            alert("Parabéns! Você está certo!");
         } else {
-            alert(`Oops! You missed it. The correct country was: ${respostaCorreta}`);
+            alert(`Oops! Você errou. O país correto é: ${respostaCorreta}`);
         }
     }
 
